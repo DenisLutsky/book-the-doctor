@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+import { connectionString } from './configs';
 
 @Module({
-  imports: [],
+  imports: [MongooseModule.forRoot(connectionString)],
   controllers: [],
   providers: [],
 })
