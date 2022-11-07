@@ -1,0 +1,9 @@
+# compiled output
+/dist
+/node_modules
+
+# Logs
+logs
+
+# IDE - VSCode
+.vscode/*
