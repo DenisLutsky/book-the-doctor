@@ -6,7 +6,7 @@ import { Photo, PhotoDocument } from 'src/modules/users/schemas';
 export class PhotoRepository {
   public constructor(@InjectModel(Photo.name) private model: Model<PhotoDocument>) {}
 
-  public async create(input: any): Promise<PhotoDocument> {
+  public async create(input: Photo): Promise<PhotoDocument> {
     return await this.model.create(input);
   }
 }

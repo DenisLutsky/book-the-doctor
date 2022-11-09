@@ -38,7 +38,12 @@ export class UsersService {
   public async update(id: string, input: Partial<IUserInput>): Promise<User> {
     this.logger.log(`Updating for user with id: ${id}`, { id, input });
 
-    return await this.userRepository.updateOne(id, input);
+    // TODO: add photo update
+    // if (input.photo.url) {
+    //   await this.photoRepository.update()
+    // }
+
+    return await this.userRepository.updateOne(id, { ...input, photo: input.photo.id });
   }
 
   public async remove(id: string): Promise<boolean> {

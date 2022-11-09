@@ -3,10 +3,10 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { connectionString } from './configs';
 
 import { RepositoriesModule } from '@shared/modules';
-import { UsersModule } from './modules';
+import { AppointmentsModule, UsersModule } from './modules';
 
 @Module({
-  imports: [MongooseModule.forRoot(connectionString), UsersModule, RepositoriesModule],
+  imports: [MongooseModule.forRoot(connectionString), UsersModule, RepositoriesModule, AppointmentsModule],
   controllers: [],
   providers: [],
 })

@@ -4,18 +4,18 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 
 import { User, UserDocument } from 'src/modules/users/schemas';
-import { MongoError } from './interfaces';
+import { IMongoError } from './interfaces';
 
 export class UserRepository {
   private readonly logger = new Logger(UserRepository.name);
 
   public constructor(@InjectModel(User.name) private model: Model<UserDocument>) {}
 
-  public async create(input: any): Promise<UserDocument> {
+  public async create(input: Partial<User>): Promise<UserDocument> {
     try {
       return await this.model.create(input);
     } catch (err) {
-      const { code, keyValue } = err as MongoError;
+      const { code, keyValue } = err as IMongoError;
 
       this.logger.error(err);
 
@@ -49,7 +49,7 @@ export class UserRepository {
     }
   }
 
-  public async updateOne(id: string, input: any): Promise<UserDocument> {
+  public async updateOne(id: string, input: Partial<User>): Promise<UserDocument> {
     try {
       await this.findOneById(id);
 
@@ -61,7 +61,7 @@ export class UserRepository {
 
       return updated;
     } catch (err) {
-      const { code, keyValue } = err as MongoError;
+      const { code, keyValue } = err as IMongoError;
 
       if (code === 11000) {
         throw new ConflictException(`There is a record with same value in field ${Object.keys(keyValue)[0]}`);
