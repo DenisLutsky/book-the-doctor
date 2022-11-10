@@ -44,6 +44,10 @@ export class AppointmentsService {
     return await this.appointmentRepository.findOneById(id);
   }
 
+  //  const delay = moment(notification.notificationDate).diff(moment(), 'millisecond');
+  //  await this.queueService.enqueueOrderNotification(notification.orderNotificationId, delay);
+  // TODO: add approve | reject services
+
   public async update(id: string, input: Partial<IAppointmentInput>): Promise<AppointmentDocument> {
     this.logger.log(`Updating for appointment with id: ${id}`, { id, input });
 

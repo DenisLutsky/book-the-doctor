@@ -2,7 +2,7 @@ import { ConflictException, NotFoundException } from '@nestjs/common/exceptions'
 import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, Model, Types } from 'mongoose';
 
-import { User, UserDocument } from 'src/modules/users/schemas';
+import { User, UserDocument } from '@core/modules/users/schemas';
 
 export class UserRepository {
   public constructor(@InjectModel(User.name) private model: Model<UserDocument>) {}

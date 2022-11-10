@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { RolesEnum } from '@shared/enums';
 
-import { UsersService } from 'src/modules/users/services';
+import { UsersService } from '@core/modules/users/services';
+import { RolesEnum } from '@shared/enums';
 import { IAuth, ILogin, IRegister } from '../interfaces';
 import { generateJWT, hashPassword } from '../utils';
 

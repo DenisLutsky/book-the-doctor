@@ -1,5 +1,5 @@
 import { IsDefined } from 'class-validator';
-import { CreateUserDto } from 'src/modules/users/dto';
+import { CreateUserDto } from '@core/modules/users/dto';
 
 export class RegisterDto extends CreateUserDto {
   @IsDefined()

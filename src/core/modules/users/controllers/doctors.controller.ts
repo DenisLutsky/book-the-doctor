@@ -1,10 +1,10 @@
 import { Controller, Get, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 
+import { AuthGuard } from '@core/auth/guards';
+import { AppointmentDocument } from '@core/modules/appointments/schemas';
+import { AppointmentsService } from '@core/modules/appointments/services';
 import { Roles } from '@shared/decorators';
 import { RolesEnum } from '@shared/enums';
-import { AuthGuard } from 'src/auth/guards';
-import { AppointmentDocument } from 'src/modules/appointments/schemas';
-import { AppointmentsService } from 'src/modules/appointments/services';
 
 @UseGuards(AuthGuard)
 @Roles(RolesEnum.DOCTOR)

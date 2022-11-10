@@ -3,7 +3,7 @@ import { NotFoundException } from '@nestjs/common/exceptions';
 import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, Model, Types } from 'mongoose';
 
-import { Appointment, AppointmentDocument } from 'src/modules/appointments/schemas';
+import { Appointment, AppointmentDocument } from '@core/modules/appointments/schemas';
 
 export class AppointmentRepository {
   private readonly logger = new Logger(AppointmentRepository.name);
