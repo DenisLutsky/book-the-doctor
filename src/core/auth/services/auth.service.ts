@@ -30,7 +30,7 @@ export class AuthService {
     });
 
     return {
-      auth_token: generateJWT(email, createdUser.role),
+      auth_token: generateJWT(createdUser.id, email, createdUser.role),
     };
   }
 
@@ -40,7 +40,7 @@ export class AuthService {
     const existingUser = await this.usersService.findOneWithFilter({ email: input.email });
 
     return {
-      auth_token: generateJWT(input.email, existingUser.role),
+      auth_token: generateJWT(existingUser.id, input.email, existingUser.role),
     };
   }
 

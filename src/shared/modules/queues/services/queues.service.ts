@@ -3,7 +3,7 @@ import { InjectQueue } from '@nestjs/bull';
 import { Queue } from 'bull';
 
 import { BullQueues } from '../utils/options';
-import { NotificationQueueMessage } from '../interfaces';
+import { INotificationQueueMessage } from '../interfaces';
 
 @Injectable()
 export class QueuesService {
@@ -11,19 +11,12 @@ export class QueuesService {
 
   public constructor(
     @InjectQueue(BullQueues.ORDER_NOTIFICATION)
-    private readonly notificationQueue: Queue<NotificationQueueMessage>,
+    private readonly notificationQueue: Queue<INotificationQueueMessage>,
   ) {}
 
-  public async enqueueAppointmentNotification(appointmentId: string, delay: number): Promise<void> {
-    this.logger.debug(`Enqueueing appointment notification`, { appointmentId, delay });
+  public async enqueueAppointmentNotification(data: INotificationQueueMessage, delay: number): Promise<void> {
+    this.logger.log(`Enqueueing appointment notification`, { data, delay });
 
-    await this.notificationQueue.add(
-      {
-        appointmentId,
-      },
-      {
-        delay,
-      },
-    );
+    await this.notificationQueue.add(data, { delay });
   }
 }

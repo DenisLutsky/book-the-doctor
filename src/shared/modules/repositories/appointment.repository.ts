@@ -34,10 +34,18 @@ export class AppointmentRepository {
     }
   }
 
-  // TODO: add pagination
-  public async findMany(input: Partial<Appointment>): Promise<AppointmentDocument[]> {
-    const filter: FilterQuery<AppointmentDocument> = { ...input };
+  public async findOne(filter: FilterQuery<AppointmentDocument>): Promise<AppointmentDocument> {
+    const appointment = await this.model.findOne(filter);
 
+    if (!appointment) {
+      throw new NotFoundException(`No such appointment`);
+    }
+
+    return appointment;
+  }
+
+  // TODO: add pagination
+  public async findMany(filter: FilterQuery<AppointmentDocument>): Promise<AppointmentDocument[]> {
     try {
       return await this.model.find(filter);
     } catch (err) {

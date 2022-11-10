@@ -1,12 +1,18 @@
 import { Trim } from '@shared/decorators';
-import { IsDateString, IsDefined, IsNotEmpty, IsString, Length } from 'class-validator';
+import { IsDefined, IsNotEmpty, IsString, Length } from 'class-validator';
 
 export class AppointmentDto {
   @Trim()
-  @IsDateString()
+  @IsString()
   @IsNotEmpty()
   @IsDefined()
   public date!: string;
+
+  @Trim()
+  @IsString()
+  @IsNotEmpty()
+  @IsDefined()
+  public time!: string;
 
   @Trim()
   @IsString()

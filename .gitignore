@@ -7,3 +7,6 @@ logs
 
 # IDE - VSCode
 .vscode/*
+
+# configs
+.env

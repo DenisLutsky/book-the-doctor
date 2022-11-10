@@ -4,18 +4,18 @@ import { Job } from 'bull';
 
 import { NotificationsService } from '@shared/modules/notifications/services';
 import { BullQueues } from '../utils/options';
-import { NotificationQueueMessage } from '../interfaces';
+import { INotificationQueueMessage } from '../interfaces';
 
 @Processor(BullQueues.ORDER_NOTIFICATION)
-export class OrderNotificationConsumer {
-  private readonly logger = new Logger(OrderNotificationConsumer.name);
+export class AppointmentNotificationConsumer {
+  private readonly logger = new Logger(AppointmentNotificationConsumer.name);
 
   public constructor(private readonly notificationsService: NotificationsService) {}
 
   @Process()
-  public async process(job: Job<NotificationQueueMessage>): Promise<void> {
+  public async process(job: Job<INotificationQueueMessage>): Promise<void> {
     this.logger.log(`Processing started`, { jobId: job.id, data: job.data });
 
-    await this.notificationsService.sendReminder(job.data.appointmentId);
+    await this.notificationsService.sendReminder(job.data);
   }
 }

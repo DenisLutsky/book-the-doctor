@@ -20,7 +20,13 @@ export class AuthGuard implements CanActivate {
 
     const payload = validateToken(token);
 
-    return await this.checkRoles(context, payload);
+    const canActivate = await this.checkRoles(context, payload);
+
+    if (canActivate) {
+      req.user = payload;
+    }
+
+    return canActivate;
   }
 
   private async checkRoles(context: ExecutionContext, tokenPayload: IJwtPayload): Promise<boolean> {

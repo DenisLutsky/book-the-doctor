@@ -1,8 +1,9 @@
 import { Injectable, Logger } from '@nestjs/common';
 
+import { hashPassword } from '@core/auth/utils';
 import { PhotoRepository, UserRepository } from '@shared/modules/repositories';
 import { IUserInput } from '../interfaces';
-import { PhotoDocument, User } from '../schemas';
+import { PhotoDocument, User, UserDocument } from '../schemas';
 
 @Injectable()
 export class UsersService {
@@ -10,23 +11,31 @@ export class UsersService {
 
   public constructor(private userRepository: UserRepository, private photoRepository: PhotoRepository) {}
 
-  // TODO: map entity to dto
+  // TODO: add mapper
 
-  public async create(input: Partial<IUserInput>): Promise<User> {
+  public async create(input: Partial<IUserInput>): Promise<UserDocument> {
     this.logger.log(`Creating new user`, { input });
 
     let photo: PhotoDocument;
-    if (input.photo.url) {
+    if (input.photo?.url) {
       photo = await this.photoRepository.create({ url: input.photo.url });
     }
 
-    return await this.userRepository.create({ ...input, photo: photo && photo.id });
+    const hashedPassword = await hashPassword(input.password);
+
+    return await this.userRepository.create({ ...input, password: hashedPassword, photo: photo && photo.id });
   }
 
-  public async findAll(): Promise<User[]> {
+  public async findAll(): Promise<UserDocument[]> {
     this.logger.log(`Searching for all users`);
 
-    return await this.userRepository.findMany();
+    return await this.userRepository.findMany({});
+  }
+
+  public async findManyWithFilter(filter: Partial<User>): Promise<UserDocument[]> {
+    this.logger.log(`Searching for users with filter`, { filter });
+
+    return await this.userRepository.findMany(filter);
   }
 
   public async findOneById(id: string): Promise<User> {
@@ -35,10 +44,10 @@ export class UsersService {
     return await this.userRepository.findOneById(id);
   }
 
-  public async findOneWithFilter(input: Partial<User>): Promise<User> {
+  public async findOneWithFilter(input: Partial<User>, init = false): Promise<UserDocument> {
     this.logger.log(`Searching for user with filter`, { input });
 
-    return await this.userRepository.findOneWithFilter(input);
+    return await this.userRepository.findOneWithFilter(input, init);
   }
 
   public async update(id: string, input: Partial<IUserInput>): Promise<User> {

@@ -14,8 +14,8 @@ export const hashPassword = async (plainPassword: string): Promise<string> => {
   return await bcrypt.hash(plainPassword, salt);
 };
 
-export const generateJWT = (email: string, role: RolesEnum): string => {
-  const jwtPayload = { email, role };
+export const generateJWT = (id: string, email: string, role: RolesEnum): string => {
+  const jwtPayload = { id, email, role };
 
   const token = jwt.sign(jwtPayload, appConfig.jwtSecret, { expiresIn: '7d' });
 

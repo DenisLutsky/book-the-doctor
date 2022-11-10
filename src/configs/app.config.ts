@@ -3,6 +3,10 @@ import { env } from 'process';
 export const appConfig = {
   port: env.APP_PORT || 3000,
   jwtSecret: env.JWT_SECRET || 'secret',
+  admin: {
+    email: env.ADMIN_EMAIL || 'admin@admin.com',
+    password: env.ADMIN_PASSWORD || 'security',
+  },
 };
 
 export const dbConfig = {

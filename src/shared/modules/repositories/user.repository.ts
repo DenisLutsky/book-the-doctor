@@ -31,20 +31,22 @@ export class UserRepository {
     return user;
   }
 
-  public async findOneWithFilter(input: Partial<User>): Promise<UserDocument> {
+  public async findOneWithFilter(input: Partial<User>, init?: boolean): Promise<UserDocument> {
     const filter: FilterQuery<User> = { ...input };
 
     const user = await this.model.findOne(filter);
 
-    if (!user) {
+    if (!user && !init) {
       throw new NotFoundException(`No such user`);
     }
 
     return user;
   }
 
-  public async findMany(): Promise<UserDocument[]> {
-    return await this.model.find();
+  public async findMany(input: Partial<User>): Promise<UserDocument[]> {
+    const filter: FilterQuery<UserDocument> = { ...input };
+
+    return await this.model.find(filter);
   }
 
   public async updateOne(id: string, input: Partial<User>): Promise<UserDocument> {
