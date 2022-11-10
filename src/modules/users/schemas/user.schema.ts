@@ -8,7 +8,7 @@ export type UserDocument = HydratedDocument<User>;
 
 @Schema({ timestamps: true })
 export class User {
-  @Prop({ dropDups: true, unique: true, required: true, type: String })
+  @Prop({ required: true, type: String })
   public email: string;
 
   @Prop({ required: true, type: String })
@@ -23,7 +23,7 @@ export class User {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Photo.name })
   public photo: string;
 
-  @Prop({ unique: true, type: String })
+  @Prop({ type: String })
   public phone: string;
 
   @Prop({ required: true, enum: RolesEnum, default: RolesEnum.PATIENT })

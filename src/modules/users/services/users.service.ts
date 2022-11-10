@@ -16,7 +16,7 @@ export class UsersService {
     this.logger.log(`Creating new user`, { input });
 
     let photo: PhotoDocument;
-    if (input.photo) {
+    if (input.photo.url) {
       photo = await this.photoRepository.create({ url: input.photo.url });
     }
 
@@ -29,10 +29,16 @@ export class UsersService {
     return await this.userRepository.findMany();
   }
 
-  public async findOne(id: string): Promise<User> {
+  public async findOneById(id: string): Promise<User> {
     this.logger.log(`Searching for user with id: ${id}`);
 
     return await this.userRepository.findOneById(id);
+  }
+
+  public async findOneWithFilter(input: Partial<User>): Promise<User> {
+    this.logger.log(`Searching for user with filter`, { input });
+
+    return await this.userRepository.findOneWithFilter(input);
   }
 
   public async update(id: string, input: Partial<IUserInput>): Promise<User> {

@@ -1,7 +1,8 @@
 import { env } from 'process';
 
 export const appConfig = {
-  port: 3000,
+  port: env.APP_PORT || 3000,
+  jwtSecret: env.JWT_SECRET || 'secret',
 };
 
 export const dbConfig = {

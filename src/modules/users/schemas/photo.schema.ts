@@ -5,7 +5,7 @@ export type PhotoDocument = HydratedDocument<Photo>;
 
 @Schema({ timestamps: true })
 export class Photo {
-  @Prop({ required: true, type: String })
+  @Prop({ type: String })
   public url: string;
 }
 
